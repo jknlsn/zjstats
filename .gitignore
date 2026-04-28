@@ -1,0 +1,18 @@
+# Binaries
+zjstat
+zjstatd
+*.exe
+
+# Go
+*.test
+*.out
+/vendor/
+
+# macOS
+.DS_Store
+
+# Editor
+*.swp
+*.swo
+.idea/
+.vscode/

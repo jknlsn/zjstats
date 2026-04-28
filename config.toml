@@ -1,0 +1,44 @@
+# Default configuration mirrors the original hard-coded Catppuccin Mocha layout.
+# Copy to ~/.config/zjstat/config.toml to customise.
+
+[theme]
+background = "$surface0"
+label = "$blue,bold"
+text = "$text"
+alert = "$red,bold"
+warn = "$yellow,bold"
+
+[[metrics]]
+name = "cpu"
+label = "cpu"
+format = "%2.0f%%"
+warn = 70
+alert = 90
+
+[[metrics]]
+name = "gpu"
+label = "gpu"
+format = "%2.0f%%"
+hide_if_missing = true
+
+[[metrics]]
+name = "memory"
+label = "mem"
+format = "%2.0f%%"
+warn = 80
+alert = 95
+
+[[metrics]]
+name = "disk"
+label = "ssd"
+format = "%2.0f%%"
+mount = "/"
+warn = 85
+alert = 95
+
+[[metrics]]
+name = "disk"
+label = "ext"
+format = "%2.0f%%"
+mount = "/Volumes/OWC"
+hide_if_missing = true
