@@ -198,6 +198,24 @@ zjstat/
 └── README.md
 ```
 
+## Example setup
+
+The [`example/`](example/) directory contains a complete Zellij config for a quickstart:
+
+| File | What it is |
+|------|------------|
+| `config.kdl` | Zellij keybindings, theme, and settings |
+| `layout.kdl` | Tab template with zjstatus and zjstat wired in |
+| `context.sh` | Context-aware SSH/local indicators (replaces the old `metric.sh`; cpu/gpu/mem/disk now come from `zjstatd`) |
+
+### Before using
+
+1. Replace **every** `/Users/YOUR_USERNAME/` path with your actual home path.
+2. Install `zjstatus.wasm` from the [releases page](https://github.com/dj95/zjstatus/releases) to `~/.config/zellij/plugins/`.
+3. Build and install `zjstat` and `zjstatd` as described above.
+4. Copy `context.sh` to `~/.config/zellij/shell/` and make it executable.
+5. Optionally set `ZJSTAT_PREFERRED_USER` in your shell rc if your primary user differs from `$(id -un)`.
+
 ## Future ideas
 
 - [ ] Network throughput (delta of interface counters)

@@ -1,0 +1,109 @@
+layout {
+    default_tab_template {
+        pane size=1 borderless=true {
+            plugin location="file:~/.config/zellij/plugins/zjstatus.wasm" {
+            // -- Catppuccin Mocha --
+            color_rosewater "#f5e0dc"
+            color_flamingo "#f2cdcd"
+            color_pink "#f5c2e7"
+            color_mauve "#cba6f7"
+            color_red "#f38ba8"
+            color_maroon "#eba0ac"
+            color_peach "#fab387"
+            color_yellow "#f9e2af"
+            color_green "#a6e3a1"
+            color_teal "#94e2d5"
+            color_sky "#89dceb"
+            color_sapphire "#74c7ec"
+            color_blue "#89b4fa"
+            color_lavender "#b4befe"
+            color_text "#cdd6f4"
+            color_subtext1 "#bac2de"
+            color_subtext0 "#a6adc8"
+            color_overlay2 "#9399b2"
+            color_overlay1 "#7f849c"
+            color_overlay0 "#6c7086"
+            color_surface2 "#585b70"
+            color_surface1 "#313244"
+            color_surface0 "#1d1d2e"
+            color_base "#1e1e2e"
+            color_mantle "#181825"
+            color_crust "#11111b"
+
+            format_left   "{mode}#[bg=$surface0] {tabs}"
+            format_center "{notifications}"
+            format_right  "{command_status} #[bg=$surface0,fg=$peach,bold]{session}{command_context_ssh}{command_context_user}{command_context_ssh_user}{command_context_local} #[bg=$surface0,fg=$text,bold]{datetime}"
+            format_space  "#[bg=$surface0]"
+            format_hide_on_overlength "false"
+            format_precedence "lrc"
+
+            command_status_command "/Users/YOUR_USERNAME/.config/zellij/bin/zjstat"
+            command_status_format  "{stdout}"
+            command_status_interval "1"
+            command_status_rendermode "dynamic"
+
+            command_context_ssh_command "/Users/YOUR_USERNAME/.config/zellij/shell/context.sh context-ssh"
+            command_context_ssh_format  " #[bg=$surface0,fg=$yellow,bold]{stdout}"
+            command_context_ssh_hideonemptystdout "true"
+            command_context_ssh_interval "10"
+            command_context_ssh_rendermode "static"
+
+            command_context_user_command "/Users/YOUR_USERNAME/.config/zellij/shell/context.sh context-user"
+            command_context_user_format  " #[bg=$surface0,fg=$red,bold]{stdout}"
+            command_context_user_hideonemptystdout "true"
+            command_context_user_interval "10"
+            command_context_user_rendermode "static"
+
+            command_context_ssh_user_command "/Users/YOUR_USERNAME/.config/zellij/shell/context.sh context-ssh-user"
+            command_context_ssh_user_format  " #[bg=$surface0,fg=$red,bold]{stdout}"
+            command_context_ssh_user_hideonemptystdout "true"
+            command_context_ssh_user_interval "10"
+            command_context_ssh_user_rendermode "static"
+
+            command_context_local_command "/Users/YOUR_USERNAME/.config/zellij/shell/context.sh context-local"
+            command_context_local_format  " #[bg=$surface0,fg=$blue,bold]{stdout}"
+            command_context_local_hideonemptystdout "true"
+            command_context_local_interval "10"
+            command_context_local_rendermode "static"
+
+            datetime          "{format}"
+            datetime_format   "%H:%M"
+            datetime_timezone "Australia/Melbourne"
+
+            mode_normal        "#[bg=$color_surface0,fg=$blue] NORMAL"
+            mode_tmux          "#[bg=$color_surface0,fg=$mauve] TMUX"
+            mode_locked        "#[bg=$color_surface0,fg=$red] LOCKED"
+            mode_pane          "#[bg=$color_surface0,fg=$teal] PANE"
+            mode_tab           "#[bg=$color_surface0,fg=$teal] TAB"
+            mode_scroll        "#[bg=$color_surface0,fg=$flamingo] SCROLL"
+            mode_enter_search  "#[bg=$color_surface0,fg=$flamingo] ENT-SEARCH"
+            mode_search        "#[bg=$color_surface0,fg=$flamingo] SEARCHARCH"
+            mode_resize        "#[bg=$color_surface0,fg=$yellow] RESIZE"
+            mode_rename_tab    "#[bg=$color_surface0,fg=$yellow] RENAME-TAB"
+            mode_rename_pane   "#[bg=$color_surface0,fg=$yellow] RENAME-PANE"
+            mode_move          "#[bg=$color_surface0,fg=$yellow] MOVE"
+            mode_session       "#[bg=$color_surface0,fg=$pink] SESSION"
+            mode_prompt        "#[bg=$color_surface0,fg=$pink] PROMPT"
+
+            tab_normal              "#[bg=$color_surface0,fg=$subtext0,bold]{name}"
+            tab_normal_fullscreen   "#[bg=$color_surface0,fg=$subtext0,bold]{name}"
+            tab_normal_sync         "#[bg=$color_surface0,fg=$subtext0,bold]{name}"
+            tab_active              "#[bg=$color_surface0,fg=$peach,bold]{name}"
+            tab_active_fullscreen   "#[bg=$color_surface0,fg=$peach,bold]{name}"
+            tab_active_sync         "#[bg=$color_surface0,fg=$peach,bold]{name}"
+            tab_separator           "#[bg=$1d1d2e] "
+
+            tab_sync_indicator       ""
+            tab_fullscreen_indicator ""
+            tab_floating_indicator   ""
+
+            notification_format_unread "#[bg=surface0,fg=$yellow]#[bg=$yellow,fg=$crust] #[bg=$surface1,fg=$yellow] {message}#[bg=$surface0,fg=$yellow]"
+            notification_format_no_notifications ""
+            notification_show_interval "10"
+            }
+        }
+        children
+    }
+
+    tab
+}

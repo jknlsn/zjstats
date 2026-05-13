@@ -1,0 +1,110 @@
+keybinds clear-defaults=true {
+    locked {
+        bind "Ctrl g" { SwitchToMode "normal"; }
+    }
+
+    shared_except "locked" "scroll" "search" "entersearch" "renametab" {
+        bind "Ctrl g" { SwitchToMode "locked"; }
+
+        bind "Super t" { NewTab; }
+        bind "Super r" { SwitchToMode "renametab"; TabNameInput 0; }
+        bind "Super Shift r" {
+            OverrideLayout {
+                layout "/Users/YOUR_USERNAME/.config/zellij/layouts/default.kdl"
+                apply_only_to_active_tab true
+                retain_existing_terminal_panes true
+            }
+        }
+        bind "Super x" { Detach; }
+        bind "Super w" { CloseFocus; }
+        bind "Super 1" { GoToTab 1; }
+        bind "Super 2" { GoToTab 2; }
+        bind "Super 3" { GoToTab 3; }
+        bind "Super 4" { GoToTab 4; }
+        bind "Super 5" { GoToTab 5; }
+        bind "Super 6" { GoToTab 6; }
+        bind "Super 7" { GoToTab 7; }
+        bind "Super 8" { GoToTab 8; }
+        bind "Super 9" { GoToTab 9; }
+        bind "Super 0" { GoToTab 10; }
+
+        bind "Super Alt i" { NewPane "up"; }
+        bind "Super Alt j" { NewPane "left"; }
+        bind "Super Alt k" { NewPane "down"; }
+        bind "Super Alt l" { NewPane "right"; }
+        bind "Super Alt Up" { MoveFocus "up"; }
+        bind "Super Alt Down" { MoveFocus "down"; }
+        bind "Super Alt Left" { MoveFocus "left"; }
+        bind "Super Alt Right" { MoveFocus "right"; }
+
+        bind "Super Alt Enter" { ToggleFocusFullscreen; }
+
+        bind "Super Shift ]" { GoToNextTab; }
+        bind "Super Shift [" { GoToPreviousTab; }
+        bind "Super Alt Tab" { GoToNextTab; }
+        bind "Super Alt Shift Tab" { GoToPreviousTab; }
+
+        bind "Super Alt =" { NextSwapLayout; }
+
+        bind "Super [" { SwitchToMode "scroll"; }
+    }
+
+    scroll {
+        bind "PageDown" { PageScrollDown; }
+        bind "PageUp" { PageScrollUp; }
+        bind "Left" { PageScrollUp; }
+        bind "Down" { ScrollDown; }
+        bind "Up" { ScrollUp; }
+        bind "Right" { PageScrollDown; }
+        bind "Ctrl c" { ScrollToBottom; SwitchToMode "normal"; }
+        bind "d" { HalfPageScrollDown; }
+        bind "u" { HalfPageScrollUp; }
+        bind "h" { PageScrollUp; }
+        bind "j" { ScrollDown; }
+        bind "k" { ScrollUp; }
+        bind "l" { PageScrollDown; }
+        bind "s" { SwitchToMode "entersearch"; SearchInput 0; }
+    }
+
+    entersearch {
+        bind "Ctrl c" { SwitchToMode "scroll"; }
+        bind "Esc" { SwitchToMode "scroll"; }
+        bind "Enter" { SwitchToMode "search"; }
+    }
+
+    search {
+        bind "c" { SearchToggleOption "CaseSensitivity"; }
+        bind "n" { Search "down"; }
+        bind "o" { SearchToggleOption "WholeWord"; }
+        bind "p" { Search "up"; }
+        bind "w" { SearchToggleOption "Wrap"; }
+    }
+
+    renametab {
+        bind "Esc" { UndoRenameTab; SwitchToMode "normal"; }
+    }
+
+    shared_except "normal" "locked" "entersearch" {
+        bind "Enter" { SwitchToMode "normal"; }
+    }
+
+    shared_except "normal" "locked" "entersearch" "renametab" {
+        bind "Esc" { SwitchToMode "normal"; }
+    }
+}
+
+theme "catppuccin-mocha"
+default_mode "normal"
+default_shell "fish"
+default_layout "default"
+
+mouse_mode true
+copy_on_select true
+scroll_buffer_size 100000
+session_serialization true
+serialize_pane_viewport false
+support_kitty_keyboard_protocol true
+session_name_in_terminal_title false
+
+pane_frames false
+simplified_ui true
