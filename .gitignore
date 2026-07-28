@@ -1,6 +1,6 @@
-# Binaries
-zjstat
-zjstatd
+# Binaries (anchored to repo root so cmd/zjstat*, internal/zjstatd/ stay tracked)
+/zjstat
+/zjstatd
 *.exe
 
 # Go
