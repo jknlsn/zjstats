@@ -75,13 +75,13 @@ func Default() *Config {
 	}
 }
 
-// Load reads a TOML file from the standard config path or returns defaults.
+// Load reads ~/.config/zjstat/config.toml or returns defaults.
 func Load() (*Config, error) {
-	cfgDir, err := os.UserConfigDir()
+	home, err := os.UserHomeDir()
 	if err != nil {
 		return Default(), nil
 	}
-	path := filepath.Join(cfgDir, "zjstat", "config.toml")
+	path := filepath.Join(home, ".config", "zjstat", "config.toml")
 	data, err := os.ReadFile(path)
 	if err != nil {
 		if os.IsNotExist(err) {
