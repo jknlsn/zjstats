@@ -42,6 +42,15 @@ go install ./cmd/zjstatd
 go install ./cmd/zjstat
 ```
 
+On **pro-one only**, launchd enforces a Launch Constraint that rejects
+ad-hoc-signed binaries, so re-sign with your Apple Development cert after
+copying and restart the agent:
+
+```bash
+codesign -s "Apple Development: Jake Nelson (9475H48R63)" ~/.config/zellij/bin/zjstatd
+launchctl kickstart -k gui/$(id -u)/dev.zjstatd
+```
+
 ## Usage
 
 ### 1. Start the daemon
