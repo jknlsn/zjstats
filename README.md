@@ -42,9 +42,11 @@ go install ./cmd/zjstatd
 go install ./cmd/zjstat
 ```
 
-On **pro-one only**, launchd enforces a Launch Constraint that rejects
-ad-hoc-signed binaries, so re-sign with your Apple Development cert after
-copying and restart the agent:
+Go builds are ad-hoc signed, and **pro-one's** launchd Launch Constraint
+rejects ad-hoc-signed binaries. Simplest policy: sign once and copy that
+same binary to every host — a properly signed build runs everywhere, only
+pro-one strictly requires it. Re-signing replaces the running binary, so
+rebuild → sign → swap (never over a live inode) → restart the agent there:
 
 ```bash
 codesign -s "Apple Development: Jake Nelson (9475H48R63)" ~/.config/zellij/bin/zjstatd
