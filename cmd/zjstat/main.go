@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"encoding/json"
+	"flag"
 	"fmt"
 	"io"
 	"net"
@@ -24,6 +25,9 @@ func main() {
 }
 
 func run() error {
+	zjherder := flag.Bool("zjherder", false, "render with zjherder widget markup (ANSI-index tokens) instead of zjstatus directives")
+	flag.Parse()
+
 	cfg, err := config.Load()
 	if err != nil {
 		return err
@@ -60,6 +64,10 @@ func run() error {
 		return fmt.Errorf("decode metrics: %w", err)
 	}
 
-	_, err = fmt.Fprint(os.Stdout, format.Snapshot(&snap, cfg))
+	render := format.Snapshot
+	if *zjherder {
+		render = format.SnapshotZjHerder
+	}
+	_, err = fmt.Fprint(os.Stdout, render(&snap, cfg))
 	return err
 }

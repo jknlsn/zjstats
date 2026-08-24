@@ -69,3 +69,84 @@ func labelColor(val float64, m config.MetricConfig, t config.Theme) string {
 
 func bg(c string) string { return "#[bg=" + c + "]" }
 func fg(c string) string { return "#[fg=" + c + "]" }
+
+// SnapshotZjHerder renders with zjherder's widget markup instead of
+// zjstatus's: tokens carry concrete ANSI indices (themed by the terminal
+// palette at render time) and are complete styles. No background tokens —
+// zjherder's bar renders on the plain terminal background, so a bg chip
+// (ANSI 8 is not surface0 in most palettes) reads as a dim box. $-theme
+// references resolve through ansiIndex; unknown names drop the colour and
+// keep any modifiers.
+func SnapshotZjHerder(s *metrics.Snapshot, cfg *config.Config) string {
+	var b strings.Builder
+	for _, m := range cfg.Metrics {
+		valStr, val, ok := resolveMetric(s, m)
+		if !ok {
+			if m.HideIfMissing {
+				continue
+			}
+			valStr = "--%"
+		}
+
+		b.WriteString(token(labelColor(val, m, cfg.Theme)))
+		b.WriteString(m.Label)
+		b.WriteString(": ")
+		b.WriteString(token(cfg.Theme.Text))
+		b.WriteString(valStr)
+		b.WriteByte(' ')
+	}
+	return strings.TrimRight(b.String(), " ")
+}
+
+// token builds one zjherder style token: `#[fg=F]` with `,bold`/`,dim`
+// modifiers carried from the theme entry; empty when nothing applies.
+func token(spec string) string {
+	name, mods := splitSpec(spec)
+	var attrs []string
+	if idx := ansiIndex(name); idx != "" {
+		attrs = append(attrs, "fg="+idx)
+	}
+	for _, mod := range mods {
+		if mod == "bold" || mod == "dim" {
+			attrs = append(attrs, mod)
+		}
+	}
+	if len(attrs) == 0 {
+		return ""
+	}
+	return "#[" + strings.Join(attrs, ",") + "]"
+}
+
+// splitSpec splits a theme entry like "$blue,bold" into its colour name
+// and remaining modifier words.
+func splitSpec(spec string) (string, []string) {
+	parts := strings.Split(strings.TrimSpace(spec), ",")
+	return strings.TrimPrefix(parts[0], "$"), parts[1:]
+}
+
+// ansiIndex maps a zjstatus theme colour name to the ANSI index zjherder
+// renders (terminal-palette themed). Unknown names return "".
+func ansiIndex(name string) string {
+	switch name {
+	case "red", "maroon", "peach", "flamingo":
+		return "1"
+	case "green":
+		return "2"
+	case "yellow":
+		return "3"
+	case "blue":
+		return "4"
+	case "mauve", "magenta", "pink", "lavender":
+		return "5"
+	case "cyan", "teal", "sky", "sapphire":
+		return "6"
+	case "text", "subtext0", "subtext1", "white", "rosewater":
+		return "7"
+	case "surface0", "surface1", "surface2", "overlay0", "overlay1", "overlay2":
+		return "8"
+	case "base", "mantle", "crust", "black":
+		return "0"
+	default:
+		return ""
+	}
+}
