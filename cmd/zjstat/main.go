@@ -25,7 +25,7 @@ func main() {
 }
 
 func run() error {
-	zjherder := flag.Bool("zjherder", false, "render with zjherder widget markup (ANSI-index tokens) instead of zjstatus directives")
+	zjd := flag.Bool("zjd", false, "render with zjd widget markup (ANSI-index tokens) instead of zjstatus directives")
 	flag.Parse()
 
 	cfg, err := config.Load()
@@ -65,8 +65,8 @@ func run() error {
 	}
 
 	render := format.Snapshot
-	if *zjherder {
-		render = format.SnapshotZjHerder
+	if *zjd {
+		render = format.SnapshotZjd
 	}
 	_, err = fmt.Fprint(os.Stdout, render(&snap, cfg))
 	return err

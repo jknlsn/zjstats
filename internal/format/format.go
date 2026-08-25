@@ -70,14 +70,14 @@ func labelColor(val float64, m config.MetricConfig, t config.Theme) string {
 func bg(c string) string { return "#[bg=" + c + "]" }
 func fg(c string) string { return "#[fg=" + c + "]" }
 
-// SnapshotZjHerder renders with zjherder's widget markup instead of
+// SnapshotZjd renders with zjd's widget markup instead of
 // zjstatus's: tokens carry concrete ANSI indices (themed by the terminal
 // palette at render time) and are complete styles. No background tokens —
-// zjherder's bar renders on the plain terminal background, so a bg chip
+// zjd's bar renders on the plain terminal background, so a bg chip
 // (ANSI 8 is not surface0 in most palettes) reads as a dim box. $-theme
 // references resolve through ansiIndex; unknown names drop the colour and
 // keep any modifiers.
-func SnapshotZjHerder(s *metrics.Snapshot, cfg *config.Config) string {
+func SnapshotZjd(s *metrics.Snapshot, cfg *config.Config) string {
 	var b strings.Builder
 	for _, m := range cfg.Metrics {
 		valStr, val, ok := resolveMetric(s, m)
@@ -98,7 +98,7 @@ func SnapshotZjHerder(s *metrics.Snapshot, cfg *config.Config) string {
 	return strings.TrimRight(b.String(), " ")
 }
 
-// token builds one zjherder style token: `#[fg=F]` with `,bold`/`,dim`
+// token builds one zjd style token: `#[fg=F]` with `,bold`/`,dim`
 // modifiers carried from the theme entry; empty when nothing applies.
 func token(spec string) string {
 	name, mods := splitSpec(spec)
@@ -124,7 +124,7 @@ func splitSpec(spec string) (string, []string) {
 	return strings.TrimPrefix(parts[0], "$"), parts[1:]
 }
 
-// ansiIndex maps a zjstatus theme colour name to the ANSI index zjherder
+// ansiIndex maps a zjstatus theme colour name to the ANSI index zjd
 // renders (terminal-palette themed). Unknown names return "".
 func ansiIndex(name string) string {
 	switch name {
