@@ -15,8 +15,8 @@ import (
 )
 
 type darwinCollector struct {
-	prevCPUTimes []cpu.TimesStat
-	prevCollect  time.Time
+	prevCPUTimes  []cpu.TimesStat
+	prevCollect   time.Time
 	preferredUser string
 }
 

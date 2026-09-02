@@ -10,9 +10,9 @@ import (
 
 // Config drives how zjstat formats the status line.
 type Config struct {
-	Theme   Theme            `toml:"theme"`
-	Metrics []MetricConfig   `toml:"metrics"`
-	Context ContextConfig    `toml:"context"`
+	Theme   Theme          `toml:"theme"`
+	Metrics []MetricConfig `toml:"metrics"`
+	Context ContextConfig  `toml:"context"`
 }
 
 // Theme holds zjstatus color directives.
@@ -29,10 +29,10 @@ type MetricConfig struct {
 	Name          string  `toml:"name"`
 	Label         string  `toml:"label"`
 	Format        string  `toml:"format"`
-	Mount         string  `toml:"mount,omitempty"`          // for disk metrics
+	Mount         string  `toml:"mount,omitempty"`           // for disk metrics
 	HideIfMissing bool    `toml:"hide_if_missing,omitempty"` // skip if disk not mounted / gpu unavailable
-	WarnAt        float64 `toml:"warn,omitempty"`           // threshold to switch label to warn color
-	AlertAt       float64 `toml:"alert,omitempty"`          // threshold to switch label to alert color
+	WarnAt        float64 `toml:"warn,omitempty"`            // threshold to switch label to warn color
+	AlertAt       float64 `toml:"alert,omitempty"`           // threshold to switch label to alert color
 }
 
 // ContextConfig holds formatting rules for the four context states.
@@ -60,11 +60,11 @@ func Default() *Config {
 			Warn:       "$yellow,bold",
 		},
 		Metrics: []MetricConfig{
-			{Name: "cpu",    Label: "cpu", Format: "%2.0f%%"},
-			{Name: "gpu",    Label: "gpu", Format: "%2.0f%%", HideIfMissing: true},
+			{Name: "cpu", Label: "cpu", Format: "%2.0f%%"},
+			{Name: "gpu", Label: "gpu", Format: "%2.0f%%", HideIfMissing: true},
 			{Name: "memory", Label: "mem", Format: "%2.0f%%"},
-			{Name: "disk",   Label: "ssd", Format: "%2.0f%%", Mount: "/"},
-			{Name: "disk",   Label: "ext", Format: "%2.0f%%", Mount: "/Volumes/OWC", HideIfMissing: true},
+			{Name: "disk", Label: "ssd", Format: "%2.0f%%", Mount: "/"},
+			{Name: "disk", Label: "ext", Format: "%2.0f%%", Mount: "/Volumes/OWC", HideIfMissing: true},
 		},
 		Context: ContextConfig{
 			SSH:     ContextRule{Format: "@{hostname}", Color: "$yellow,bold"},
