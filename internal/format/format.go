@@ -24,7 +24,7 @@ func Snapshot(s *metrics.Snapshot, cfg *config.Config) string {
 		b.WriteString(bg(cfg.Theme.Background))
 		b.WriteString(fg(labelColor(val, m, cfg.Theme)))
 		b.WriteString(m.Label)
-		b.WriteString(": ")
+		b.WriteString(labelSep(valStr))
 		b.WriteString(bg(cfg.Theme.Background))
 		b.WriteString(fg(cfg.Theme.Text))
 		b.WriteString(valStr)
@@ -32,6 +32,17 @@ func Snapshot(s *metrics.Snapshot, cfg *config.Config) string {
 	}
 
 	return strings.TrimRight(b.String(), " ")
+}
+
+// labelSep joins a label to its rendered value. Percent formats pad to
+// two digits ("%2.0f%%"), so a 3-digit value ("100%") renders one char
+// wider; dropping the pad space there keeps every metric a constant
+// width and the bar never shifts when a value crosses 100.
+func labelSep(valStr string) string {
+	if len(valStr) >= 4 {
+		return ":"
+	}
+	return ": "
 }
 
 func resolveMetric(s *metrics.Snapshot, m config.MetricConfig) (display string, value float64, ok bool) {
@@ -90,7 +101,7 @@ func SnapshotZjd(s *metrics.Snapshot, cfg *config.Config) string {
 
 		b.WriteString(token(labelColor(val, m, cfg.Theme)))
 		b.WriteString(m.Label)
-		b.WriteString(": ")
+		b.WriteString(labelSep(valStr))
 		b.WriteString(token(cfg.Theme.Text))
 		b.WriteString(valStr)
 		b.WriteByte(' ')
