@@ -70,7 +70,7 @@ zjstat
 # → cpu: 25% gpu: 63% mem: 73% ssd: 89% @local
 ```
 
-For [zjd](../zjd) bar widgets, render with its markup instead —
+For [den](../den) bar widgets, render with its markup instead —
 concrete ANSI indices (themed by the terminal palette) instead of zjstatus
 `$name` references, one complete-style token per segment:
 
@@ -79,11 +79,11 @@ zjstat --zjd
 # → #[fg=4,bold]cpu: #[fg=7]25% #[fg=4,bold]gpu: …
 ```
 
-No background tokens: zjd's bar renders on the plain terminal
+No background tokens: den's bar renders on the plain terminal
 background (an ANSI-8 bg reads as a dim box, not surface0).
 
-Wire it as the host's `[bar.widget.stats]` in `~/.config/zjd/config.toml`
-(see zjd's `docs/config.md` § Cross-machine widgets). The same config —
+Wire it as the host's `[bar.widget.stats]` in `~/.conf../den/config.toml`
+(see den's `docs/config.md` § Cross-machine widgets). The same config —
 metrics, labels, thresholds, `hide_if_missing` — drives both renderers.
 
 ### 3. Configuration
